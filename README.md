@@ -38,7 +38,21 @@ pytest -q
 
 ## Deploy
 
-The repository is ready for Streamlit Community Cloud: choose the repository, `main` branch, and `app.py` entrypoint, then select Python 3.12 in Advanced settings. No secrets or external system packages are required.
+### Vercel
+
+Import the repository with the default project settings. `vercel.json` explicitly serves the browser-native dashboard from `public/`, so Vercel does not try to interpret the Streamlit `app.py` as a Python Function. No build command, server process, or environment variables are required.
+
+The Vercel version performs filtering and CSV ingestion locally in the visitor's browser. Regenerate its committed analytical dataset after changing the source data or Python analytics:
+
+```bash
+python build_static.py
+```
+
+### Streamlit Community Cloud
+
+Choose the repository, `main` branch, and `app.py` entrypoint, then select Python 3.12 in Advanced settings. No secrets or external system packages are required.
+
+### Container platforms
 
 For any container platform:
 

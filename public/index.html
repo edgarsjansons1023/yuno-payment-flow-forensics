@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interactive payment funnel analysis for HorizonMarket checkout sessions."
+    />
+    <title>Payment Flow Forensics</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark">YP</span>
+        <div>
+          <strong>Payment Flow Forensics</strong>
+          <small>HorizonMarket · diagnostic workspace</small>
+        </div>
+      </div>
+
+      <label class="upload-card" for="event-upload">
+        <span class="upload-title">Load event log</span>
+        <span class="upload-button">Choose CSV</span>
+        <span id="source-label" class="upload-help">Included demo · 1,000 sessions</span>
+      </label>
+      <input id="event-upload" type="file" accept=".csv,text/csv" hidden />
+
+      <div class="filter-heading">
+        <span>Filters</span>
+        <button id="reset-filters" class="text-button" type="button">Reset</button>
+      </div>
+      <div class="date-grid">
+        <label>From<input id="date-from" type="date" /></label>
+        <label>To<input id="date-to" type="date" /></label>
+      </div>
+      <div id="filters" class="filters"></div>
+      <p class="sidebar-note">All timestamps are UTC. Uploaded files stay in your browser.</p>
+    </aside>
+
+    <main class="main">
+      <header class="hero">
+        <p class="eyebrow">Payment intelligence / diagnostic report</p>
+        <h1>Where the checkout loses customers</h1>
+        <p class="lede">
+          A session-level reconstruction of HorizonMarket’s payment journey, with the failure
+          patterns and cohorts that deserve action first.
+        </p>
+        <span id="cohort-pill" class="pill">Loading sessions…</span>
+      </header>
+
+      <section id="metrics" class="metrics" aria-label="Headline metrics"></section>
+
+      <nav class="tabs" aria-label="Analysis views">
+        <button class="tab active" data-tab="overview" type="button">Overview</button>
+        <button class="tab" data-tab="segments" type="button">Segments</button>
+        <button class="tab" data-tab="causes" type="button">Root causes</button>
+        <button class="tab" data-tab="anomalies" type="button">Anomalies</button>
+        <button class="tab" data-tab="sessions" type="button">Session drill-down</button>
+      </nav>
+
+      <section id="overview" class="panel active">
+        <div class="section-heading">
+          <div><p class="eyebrow">Journey performance</p><h2>Funnel health</h2></div>
+          <p id="largest-drop" class="callout"></p>
+        </div>
+        <div class="grid two-thirds">
+          <article class="card"><h3>Sessions reaching each stage</h3><div id="funnel"></div></article>
+          <article class="card"><h3>Final session outcome</h3><div id="outcomes"></div></article>
+        </div>
+        <article class="card trend-card"><h3>Daily checkout completion</h3><div id="trend"></div></article>
+      </section>
+
+      <section id="segments" class="panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Cohort comparison</p><h2>Where performance diverges</h2></div>
+          <label class="inline-select">Break down by<select id="segment-dimension"></select></label>
+        </div>
+        <article class="card"><div id="segment-chart"></div></article>
+        <article class="card table-card"><div id="segment-table"></div></article>
+      </section>
+
+      <section id="causes" class="panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Prioritized diagnosis</p><h2>Ranked root causes</h2></div>
+          <p class="section-copy">Each issue includes the affected cohort, supporting evidence, and a recommended action.</p>
+        </div>
+        <div id="insights" class="insights"></div>
+      </section>
+
+      <section id="anomalies" class="panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Quality and incident signals</p><h2>Anomaly watchlist</h2></div>
+        </div>
+        <div id="anomaly-metrics" class="metrics compact"></div>
+        <article class="card table-card"><div id="anomaly-table"></div></article>
+      </section>
+
+      <section id="sessions" class="panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Underlying evidence</p><h2>Session drill-down</h2></div>
+          <button id="download-sessions" class="primary-button" type="button">Download filtered CSV</button>
+        </div>
+        <div class="session-tools">
+          <label>Outcome<select id="outcome-filter"><option value="">All outcomes</option></select></label>
+          <label>Search<input id="session-search" type="search" placeholder="Session ID" /></label>
+        </div>
+        <article class="card table-card"><div id="session-table"></div></article>
+      </section>
+
+      <footer>
+        <span id="footer-source">Loading analytical dataset…</span>
+        <a href="https://github.com/edgarsjansons1023/yuno-payment-flow-forensics">View source</a>
+      </footer>
+    </main>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
+

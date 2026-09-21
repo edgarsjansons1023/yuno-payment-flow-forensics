@@ -21,7 +21,11 @@ jobs:
       - name: Install dependencies
         run: pip install --requirement requirements-dev.txt
       - name: Static checks
-        run: ruff check .
+        run: |
+          ruff check .
+          node --check public/app.js
+          python build_static.py
+          git diff --exit-code public/sessions.json
       - name: Dependency audit
         run: pip-audit --requirement requirements.txt
       - name: Tests
