@@ -2,6 +2,8 @@
 
 A local Streamlit dashboard that reconstructs checkout journeys from raw payment events, quantifies every funnel transition, and ranks the patterns driving non-completion. The included deterministic dataset models HorizonMarket's 41% checkout loss across Southeast Asia and East Africa.
 
+**Live dashboard:** [yuno-payment-flow-forensics.vercel.app](https://yuno-payment-flow-forensics.vercel.app)
+
 ## Executive summary
 
 The demonstration data contains 1,000 checkout attempts and 6,174 raw events over 14 days. Exactly 590 sessions complete payment. The top of the funnel is healthy: 99.2% select a payment method and 95.9% reach authorization. The decisive loss occurs after authorization begins, where 369 of 959 sessions fail to complete. Those sessions include declines, explicit abandonment, and pending bank transfers, so the dashboard keeps those outcomes separate.
