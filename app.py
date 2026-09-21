@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import html
 import io
 from pathlib import Path
 
@@ -307,13 +308,17 @@ with causes_tab:
         st.info("This cohort is too small to rank root causes reliably.")
     else:
         for rank, insight in insights.iterrows():
+            safe = {
+                key: html.escape(str(insight[key]))
+                for key in ("category", "issue", "evidence", "recommendation")
+            }
             st.markdown(
                 f"""
                 <div class="insight-card">
-                  <div class="insight-rank">Priority {rank + 1} · {insight['category'].replace('_', ' ')}</div>
-                  <div class="insight-title">{insight['issue']}</div>
-                  <div class="insight-evidence">{insight['evidence']}</div>
-                  <div class="insight-action"><strong>Action:</strong> {insight['recommendation']}</div>
+                  <div class="insight-rank">Priority {rank + 1} · {safe['category'].replace('_', ' ')}</div>
+                  <div class="insight-title">{safe['issue']}</div>
+                  <div class="insight-evidence">{safe['evidence']}</div>
+                  <div class="insight-action"><strong>Action:</strong> {safe['recommendation']}</div>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -322,7 +327,10 @@ with causes_tab:
     decline_col, processor_col = st.columns(2)
     with decline_col:
         declines = (
-            filtered_sessions.loc[filtered_sessions["decline_code"].ne(""), "decline_code"]
+            filtered_sessions.loc[
+                filtered_sessions["outcome"].eq("failed") & filtered_sessions["decline_code"].ne(""),
+                "decline_code",
+            ]
             .value_counts()
             .rename_axis("decline_code")
             .reset_index(name="sessions")
