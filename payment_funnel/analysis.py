@@ -9,7 +9,6 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-
 CANONICAL_STAGES = [
     "checkout_initiated",
     "method_selected",

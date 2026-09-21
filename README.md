@@ -32,8 +32,22 @@ python generate_data.py
 To run the verification suite:
 
 ```bash
+pip install -r requirements-dev.txt
 pytest -q
 ```
+
+## Deploy
+
+The repository is ready for Streamlit Community Cloud: choose the repository, `main` branch, and `app.py` entrypoint, then select Python 3.12 in Advanced settings. No secrets or external system packages are required.
+
+For any container platform:
+
+```bash
+docker build -t payment-flow-forensics .
+docker run --rm -p 8501:8501 payment-flow-forensics
+```
+
+The image runs as an unprivileged user, honors a platform-provided `PORT`, and exposes Streamlit's health endpoint through the container health check.
 
 ## What the dashboard shows
 

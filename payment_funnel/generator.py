@@ -4,11 +4,10 @@ from __future__ import annotations
 
 import csv
 import random
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Iterable
-
 
 METHODS = (
     "card_visa",

@@ -13,7 +13,6 @@ from payment_funnel import (
     segment_funnel,
 )
 
-
 BASE = {
     "payment_method": "card_visa",
     "currency": "PHP",
@@ -169,4 +168,3 @@ def test_later_stage_cannot_skip_a_required_stage(tmp_path):
     funnel = compute_funnel(sessions)
     assert funnel["reached_sessions"].tolist() == [1, 0, 0, 0, 0]
     assert sessions.iloc[0]["outcome"] == "abandoned"
-

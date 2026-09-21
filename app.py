@@ -21,7 +21,6 @@ from payment_funnel import (
     segment_funnel,
 )
 
-
 DATA_PATH = Path(__file__).parent / "data" / "transaction_events.csv"
 COLORS = {
     "navy": "#0B1835",
@@ -84,6 +83,7 @@ def load_default_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     return events, reconstruct_sessions(events)
 
 
+@st.cache_data(show_spinner=False)
 def load_uploaded_data(contents: bytes) -> tuple[pd.DataFrame, pd.DataFrame]:
     events = load_and_validate_events(io.BytesIO(contents))
     return events, reconstruct_sessions(events)
@@ -92,12 +92,12 @@ def load_uploaded_data(contents: bytes) -> tuple[pd.DataFrame, pd.DataFrame]:
 def base_figure_layout(figure: go.Figure, height: int = 390) -> go.Figure:
     figure.update_layout(
         height=height,
-        margin=dict(l=20, r=20, t=55, b=20),
+        margin={"l": 20, "r": 20, "t": 55, "b": 20},
         paper_bgcolor="#FFFFFF",
         plot_bgcolor="#FFFFFF",
-        font=dict(family="Inter, Arial, sans-serif", color=COLORS["navy"]),
+        font={"family": "Inter, Arial, sans-serif", "color": COLORS["navy"]},
         legend_title_text="",
-        hoverlabel=dict(bgcolor="white", font_color=COLORS["navy"]),
+        hoverlabel={"bgcolor": "white", "font_color": COLORS["navy"]},
     )
     return figure
 
